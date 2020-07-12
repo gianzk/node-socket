@@ -7,6 +7,83 @@
   <title>Client</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <style>
+    .title {
+      margin: 20px 0px;
+      text-align: center;
+    }
+
+    .seccion {
+      display: flex;
+      margin:10px 20px;
+
+    }
+
+    .line-container {
+      margin-top: 30vh;
+      display: flex;
+      width: 100%;
+    }
+
+    .line-container .progress-line {
+      position: relative;
+      margin: 0 auto;
+      border-radius: 10px;
+      width: 90%;
+      background: grey;
+      height: 5px;
+      z-index: -1;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .line-container .progress-line .progress {
+      position: absolute;
+      width: 75%;
+      height: 100%;
+      background: orange;
+      transition: width 1s ease-in-out;
+    }
+
+    .line-container .status {
+      position: relative;
+      top: -9.5px;
+    }
+
+    .line-container .status .dot {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: white;
+      border: 5px solid grey;
+      cursor: pointer;
+    }
+
+    .line-container .status .dot.current {
+      background: white;
+      border: 5px solid orange;
+    }
+
+    .line-container .status .dot.completed {
+      position: relative;
+      background: orange;
+      border: 5px solid orange;
+    }
+
+    .line-container .status .dot.completed::after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 5px);
+      left: calc(50% - 5.5px);
+      height: 5px;
+      width: 10px;
+      border-left: 2px solid white;
+      border-bottom: 2px solid white;
+      transform-origin: center;
+      transform: rotate(-45deg);
+      z-index: 2;
+    }
+  </style>
 </head>
 
 <body>
@@ -31,28 +108,62 @@
     </div>
   </nav>
 
-  <div class="container">
+  <div class="container"></div>
     <div>
-      <div>
+      <div class="title">
         <h3>Ingrese el numero de pedido</h3>
       </div>
-      <div>
-        <input name="order" type="number" class="form-control" id="order">
-        <button type="submit" class="btn btn-primary" onclick="tracking()">Agregar Pedido</button>
+      <div class="seccion">
+        <input style="flex-grow: 2" name="order" type="number" id="orderInput">
+        <button style="flex-grow: 1;    margin-left: 15px;" type="submit" class="btn btn-primary"
+          onclick="tracking()">Buscar Pedido</button>
 
       </div>
 
     </div>
   </div>
-  <div class="tracking-list">
-    <div class="container">
+  <div id="tracking-list">
 
-    </div>
+      <div class='line-container'>
+        <div class='progress-line'>
+          <div class='progress' style="width: 50%;">
+          </div>
+          <div class='status'>
+            <div class='dot completed'>
+
+            </div>
+          </div>
+          <div class='status'>
+            <div class='dot current'>
+
+            </div>
+          </div>
+          <div class='status'>
+            <div class='dot'>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
   </div>
+  <script src="libs/jquery.min.js"></script>
+
   <script>
-      function tracking(){
-        console.log('its a live');
+    function tracking() {
+      if (!$('#orderInput').val()) {
+        alert("ingrese un valor valido");
       }
+      else {
+        alert("valor correcto");
+      }
+    }
+
+    function getValue(value) {
+        
+    }
   </script>
 </body>
 

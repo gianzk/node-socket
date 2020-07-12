@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client</title>
+  <title>Courier</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
@@ -15,6 +15,9 @@
           margin-left: auto;
           margin-right: auto;
           padding-bottom: 10px;
+        }
+        .centerbutton >button{
+          margin: 15px;
         }
     </style>
 </head>
@@ -31,7 +34,7 @@
       <ul class="navbar-nav mr-auto">
 
         <li class="nav-item active">
-          <a class="nav-link" href="tracking.html">Seguimiento<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="tracking.html" target="_blank">Seguimiento<span class="sr-only">(current)</span></a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
@@ -49,14 +52,18 @@
         <h4 class="font-weight-normal">Detalle de orden</h4>
       </div>
       <div class="card-body">
-        <h1 class="card-title pricing-card-title"> <small class="text-muted"></small></h1>
-        <ul class="list-unstyled">
+        <div class="detail-order">
+           <ul class="list-unstyled">
         </ul>
+        </div>
+        <div class="chat">
+              
+        </div>
       </div>
       <div class="container centerbutton">
-         <button type="button" class="btn  btn-lg  btn-outline-primary">Despacho</button>
-      <button type="button" class="btn  btn-lg  btn-outline-primary">Entregando</button>
-      <button type="button" class="btn  btn-lg  btn-outline-primary">Recepcionado</button>
+            <button type="button" class="btn  btn-lg  btn-outline-primary">Despacho</button>
+            <button type="button" class="btn  btn-lg  btn-outline-primary">Entregando</button>
+            <button type="button" class="btn  btn-lg  btn-outline-primary">Recepcionado</button>
       </div>
     </div>
   </div>
