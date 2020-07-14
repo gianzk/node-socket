@@ -1,5 +1,6 @@
 const express = require('express');
 const SocketIO = require('socket.io');
+const bodyParser = require('body-parser');
 
 const path = require('path');
 const http = require('http');
@@ -16,7 +17,9 @@ const port = process.env.PORT || 4700;
 
 
 app.use(express.static(publicPath));
+app.use(bodyParser.json());
 app.use('/order', router);
+
 
 
 server.listen(port, (err) => {

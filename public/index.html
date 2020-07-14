@@ -31,7 +31,7 @@
           <a class="nav-link" href="tracking.html">Seguimiento<span class="sr-only"></span></a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
+      <form class="form-inline my-2 my-lg-0" action="javascript:void(0);">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
@@ -49,7 +49,7 @@
   </div>
 
   <div class="container">
-    <form action="./courier.html" method="get">
+    <form action="./courier.html" method="get" id="formId">
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputName">Nombre</label>
@@ -57,11 +57,11 @@
         </div>
         <div class="form-group col-md-4">
           <label for="inputLastName">Apellidos</label>
-          <input name="lastname" type="text" class="form-control" id="inputPassword4">
+          <input name="lastname" type="text" class="form-control" id="inputLastName">
         </div>
         <div class="form-group col-md-4">
           <label for="inputDni">DNI</label>
-          <input name="dni" type="number" class="form-control" id="inputPassword4">
+          <input name="dni" type="number" class="form-control" id="inputDni">
         </div>
       </div>
       <div class="form-row">
@@ -90,31 +90,99 @@
         </div>
       </div>
       <div class="mx-auto mb-2">
-        <button type="submit" class="btn btn-primary">Agregar Pedido</button>
+        <button onclick="registerOrder()" type="submit" class="btn btn-primary">Agregar Pedido</button>
       </div>
     </form>
+
   </div>
 
 
-  <div class="container">
+  <div class="container bottonmessage">
     <div class="alert alert-success">
       <p>Guarda el codigo generado</p>
     </div>
   </div>
 
-
-
-
-
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>
+  <script src="libs/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
+
+  <script>
+    let url = window.location.host;
+    const urlPost = 'http://' + url.toString() + '/order/post/demo';
+    const urlGet = 'http://' + url.toString() + '/order/get/demo';
+
+/*     $('.bottonmessage').hover(() => {
+      const name = $('#inputName').val();
+      const lastName = $('#inputLastName').val();
+      const dni = $('#inputDni').val();
+      const pedido = $('#inputPedido').val();
+      const cantidad = $('#inputCantidad').val();
+      const address = $('#inputAddress2').val();
+      const city = $('#inputCity').val();
+      const zip = $('#inputZip').val();
+
+      const bodyData = {
+        'name': name,
+        'lastName': lastName,
+        'dni': dni,
+        'pedido': pedido,
+        'cantidad': cantidad,
+        'address': address,
+        'city': city,
+        'zip': zip
+      };
+     console.log(bodyData);
+    });
+
+    */
+
+    function registerOrder() {
+
+      const name = $('#inputName').val();
+      const lastName = $('#inputLastName').val();
+      const dni = $('#inputDni').val();
+      const pedido = $('#inputPedido').val();
+      const cantidad = $('#inputCantidad').val();
+      const address = $('#inputAddress2').val();
+      const city = $('#inputCity').val();
+      const zip = $('#inputZip').val();
+
+      const bodyData = {
+        'name': name,
+        'lastName': lastName,
+        'dni': dni,
+        'pedido': pedido,
+        'cantidad': cantidad,
+        'address': address,
+        'city': city,
+        'zip': zip
+      };
+      fetch(urlPost, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'post',
+        body: JSON3.stringify(bodyData)
+      })
+        .then((data) => {
+          console.log(data);
+        })
+    }
+    
+    function registerOrder2() {
+            console.log("send2");
+    }
+
+  </script>
 </body>
 
 </html>

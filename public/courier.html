@@ -7,19 +7,20 @@
   <title>Courier</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <style>
-        .centerbutton{
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          margin-left: auto;
-          margin-right: auto;
-          padding-bottom: 10px;
-        }
-        .centerbutton >button{
-          margin: 15px;
-        }
-    </style>
+  <style>
+    .centerbutton {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 10px;
+    }
+
+    .centerbutton>button {
+      margin: 15px;
+    }
+  </style>
 </head>
 
 <body>
@@ -37,7 +38,7 @@
           <a class="nav-link" href="tracking.html" target="_blank">Seguimiento<span class="sr-only">(current)</span></a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
+      <form class="form-inline my-2 my-lg-0" action="javascript:void(0);">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
@@ -51,21 +52,32 @@
       <div class="card-header">
         <h4 class="font-weight-normal">Detalle de orden</h4>
       </div>
-      <div class="card-body">
+      <div class="card-body courier-body">
         <div class="detail-order">
-           <ul class="list-unstyled">
-        </ul>
+          <ul class="list-unstyled">
+          </ul>
         </div>
         <div class="chat">
-              
+
         </div>
       </div>
       <div class="container centerbutton">
-            <button type="button" class="btn  btn-lg  btn-outline-primary">Despacho</button>
-            <button type="button" class="btn  btn-lg  btn-outline-primary">Entregando</button>
-            <button type="button" class="btn  btn-lg  btn-outline-primary">Recepcionado</button>
+        <button type="button" class="btn  btn-lg  btn-outline-primary">Despacho</button>
+        <button type="button" class="btn  btn-lg  btn-outline-primary">Entregando</button>
+        <button type="button" class="btn  btn-lg  btn-outline-primary">Recepcionado</button>
       </div>
     </div>
+  </div>
+    <div id="chat">
+    <div class="chat_header">
+      CHAT ONLINE
+    </div>
+    <div id="chat_body"></div>
+
+    <form action="javascript:void(0);">
+      <input type="text" name="message" id="message">
+      <button id="buttonChat">Enviar</button>
+    </form>
   </div>
 
   <script src="libs/jquery.min.js"></script>
@@ -80,40 +92,71 @@
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
 
-  <script>
-    
+ <script>
+   
     var searchParams = new URLSearchParams(window.location.search);
-
-    
-
-    let values=new Array();
-    for(let key of searchParams.keys()){
-        (searchParams.get(key))?values.push({name:key,value:searchParams.get(key)}):key=searchParams.keys().length;
+    let values = new Array();
+    for (let key of searchParams.keys()) {
+      (searchParams.get(key)) ? values.push({ name: key, value: searchParams.get(key) }) : key = searchParams.keys().length;
     }
 
-    console.log(values);
-    if(values.length<8){
+    if (values.length < 8) {
       alert("Complete todo los campos");
       window.history.back();
     }
-
+    
+ 
     function createOrder() {
-      let ul=document.getElementsByClassName("list-unstyled")[0];
-        values.map(
-          (element)=>{
-              let li=document.createElement("li");
-              const contendio=element.name+" => "+element.value;
-              const text=document.createTextNode(contendio);
-              li.appendChild(text);
-              ul.appendChild(li);
-          }
-          
-        )
+      let ul = document.getElementsByClassName("list-unstyled")[0];
+      values.map(
+        (element) => {
+          let li = document.createElement("li");
+          const contendio = element.name + " => " + element.value;
+          const text = document.createTextNode(contendio);
+          li.appendChild(text);
+          ul.appendChild(li);
+        }
+
+      )
     }
     createOrder();
-      const orderdetail=values.find(e=>{return e.name=='dni'});
-      $('h4').text('Detalle de orden: Nro'+orderdetail.value);
-   
+
+    let bodyData = new Object();
+
+    bodyData.name = values[0].value;
+    bodyData.lastName = values[1].value;
+    bodyData.dni = values[2].value;
+    bodyData.pedido = values[3].value;
+    bodyData.cantidad = values[4].value;
+    bodyData.address = values[5].value;
+    bodyData.city = values[6].value;
+    bodyData.zip = values[7].value;
+    console.log(bodyData);
+
+    let url = window.location.host;
+    const urlPost = 'http://' + url.toString() + '/order/post/demo';
+
+    fetch(urlPost,{
+       headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'post',
+        body: JSON.stringify(bodyData)
+    }).then(
+        (response)=>{ return response.json()}
+    ).then(
+      (e)=>{
+          $('h4').text('Detalle de orden: Nro:' + bodyData.dni+e.data);
+      }
+    );
+
+
+  </script> 
+  <script>
+      $('#buttonChat').click((data)=>{
+        console.log("send Chat");
+      })
   </script>
 </body>
 
