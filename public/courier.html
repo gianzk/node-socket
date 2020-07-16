@@ -20,6 +20,32 @@
     .centerbutton>button {
       margin: 15px;
     }
+
+    #chat_body {
+      overflow-y: scroll;
+      min-height: 250px;
+      max-height: 250px;
+    }
+
+    .chat_header {
+      color: #007bff;
+    }
+
+    #chat {
+      max-width: 360px;
+      margin-top: 25px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 25px;
+    }
+
+    .chat_header {
+      border-bottom: 1px solid #fd7e14;
+    }
+
+    #chat_body {
+      border: 1px solid #fd7e14;
+    }
   </style>
 </head>
 
@@ -46,7 +72,6 @@
   </nav>
   <div class="container">
     <div>
-
     </div>
     <div class="card mb-4 shadow-sm">
       <div class="card-header">
@@ -62,24 +87,25 @@
         </div>
       </div>
       <div class="container centerbutton">
-        <button type="button" class="btn  btn-lg  btn-outline-primary">Despacho</button>
-        <button type="button" class="btn  btn-lg  btn-outline-primary">Entregando</button>
-        <button type="button" class="btn  btn-lg  btn-outline-primary">Recepcionado</button>
+        <button type="button" id="first" class="btn  btn-lg  btn-outline-primary">Despacho</button>
+        <button type="button" id="second" class="btn  btn-lg  btn-outline-primary">Entregando</button>
+        <button type="button" id="three" class="btn  btn-lg  btn-outline-primary">Recepcionado</button>
       </div>
     </div>
   </div>
-    <div id="chat">
+  <div id="chat">
     <div class="chat_header">
       CHAT ONLINE
     </div>
     <div id="chat_body"></div>
-
     <form action="javascript:void(0);">
-      <input type="text" name="message" id="message">
+      <input autocomplete="false" type="text" name="message" id="message" autofocus>
       <button id="buttonChat">Enviar</button>
     </form>
   </div>
-
+  <div class="alert alert-danger" role="alert">
+    Mensaje de advertencia !
+  </div>
   <script src="libs/jquery.min.js"></script>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -92,72 +118,95 @@
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
 
- <script>
-   
-    var searchParams = new URLSearchParams(window.location.search);
-    let values = new Array();
-    for (let key of searchParams.keys()) {
-      (searchParams.get(key)) ? values.push({ name: key, value: searchParams.get(key) }) : key = searchParams.keys().length;
-    }
+  <script>
 
-    if (values.length < 8) {
-      alert("Complete todo los campos");
-      window.history.back();
-    }
-    
- 
-    function createOrder() {
-      let ul = document.getElementsByClassName("list-unstyled")[0];
-      values.map(
-        (element) => {
-          let li = document.createElement("li");
-          const contendio = element.name + " => " + element.value;
-          const text = document.createTextNode(contendio);
-          li.appendChild(text);
-          ul.appendChild(li);
-        }
+    $(document).ready(function () {
+      var searchParams = new URLSearchParams(window.location.search);
+      let values = new Array();
+      for (let key of searchParams.keys()) {
+        (searchParams.get(key)) ? values.push({ name: key, value: searchParams.get(key) }) : key = searchParams.keys().length;
+      }
 
-      )
-    }
-    createOrder();
+      if (values.length < 8) {
+        alert("Complete todo los campos");
+        window.history.back();
+      }
 
-    let bodyData = new Object();
 
-    bodyData.name = values[0].value;
-    bodyData.lastName = values[1].value;
-    bodyData.dni = values[2].value;
-    bodyData.pedido = values[3].value;
-    bodyData.cantidad = values[4].value;
-    bodyData.address = values[5].value;
-    bodyData.city = values[6].value;
-    bodyData.zip = values[7].value;
-    console.log(bodyData);
+      function createOrder() {
+        let ul = document.getElementsByClassName("list-unstyled")[0];
+        values.map(
+          (element) => {
+            let li = document.createElement("li");
+            const contendio = element.name + " => " + element.value;
+            const text = document.createTextNode(contendio);
+            li.appendChild(text);
+            ul.appendChild(li);
+          }
 
-    let url = window.location.host;
-    const urlPost = 'http://' + url.toString() + '/order/post/demo';
+        )
+      }
+      createOrder();
 
-    fetch(urlPost,{
-       headers: {
+      let bodyData = new Object();
+
+      bodyData.name = values[0].value;
+      bodyData.lastName = values[1].value;
+      bodyData.dni = values[2].value;
+      bodyData.pedido = values[3].value;
+      bodyData.cantidad = values[4].value;
+      bodyData.address = values[5].value;
+      bodyData.city = values[6].value;
+      bodyData.zip = values[7].value;
+      console.log(bodyData);
+
+      let url = window.location.host;
+      const urlPost = 'http://' + url.toString() + '/order/post/demo';
+
+      fetch(urlPost, {
+        headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         method: 'post',
         body: JSON.stringify(bodyData)
-    }).then(
-        (response)=>{ return response.json()}
-    ).then(
-      (e)=>{
-          $('h4').text('Detalle de orden: Nro:' + bodyData.dni+e.data);
-      }
-    );
+      }).then(
+        (response) => { return response.json() }
+      ).then(
+        (e) => {
+          $('h4').text('Detalle de orden: Nro:' + bodyData.dni + e.data);
+        }
+      );
+    });
+
+    // REF
+    var chat = $('#chat_body');
+    function renderizarMensaje(mensaje) {
+      var html = '';
+      var fecha = new Date(mensaje.fecha);
+      var hora = fecha.getHours() + ':' + fecha.getMinutes();
+
+      html += '<li class="reverse">';
+      html += '    <div class="chat-content">';
+      html += '        <h5>' + mensaje.nombre + '</h5>';
+      html += '        <div class="box bg-light-inverse">' + mensaje.mensaje + '</div>';
+      html += '    </div>';
+      html += '    <div class="chat-img"><img src="assets/images/users/5.jpg" alt="user" /></div>';
+      html += '    <div class="chat-time">' + hora + '</div>';
+      html += '</li>';
+
+      chat.appendChild(html);
+
+    }
 
 
-  </script> 
-  <script>
-      $('#buttonChat').click((data)=>{
-        console.log("send Chat");
-      })
   </script>
+  <script>
+
+  </script>
+
+  <script src="socket.io/socket.io.js"></script>
+  <script src="js/courier.js"></script>
 </body>
 
 </html>

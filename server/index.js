@@ -9,7 +9,7 @@ const router = require('./route');
 
 const app = express();
 let server = http.createServer(app);
-let io = SocketIO(server);
+
 
 const publicPath = path.resolve(__dirname, '../public');
 const port = process.env.PORT || 4700;
@@ -20,6 +20,9 @@ app.use(express.static(publicPath));
 app.use(bodyParser.json());
 app.use('/order', router);
 
+
+module.exports.io = SocketIO(server);
+require('./socket');
 
 
 server.listen(port, (err) => {

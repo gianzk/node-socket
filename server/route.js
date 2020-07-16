@@ -31,8 +31,10 @@ router.get('/get/demo', (req, res) => {
 
 router.post('/post/demo', (req, res) => {
   let body = req.body;
+  const ultimo = orderTotal.ultimo;
+  const codigo = body.dni + ultimo;
   orderTotal.registerOrder(body);
-  const ultimo=orderTotal.ultimo;
+
   res.json({
     status: true,
     data: ultimo

@@ -1,41 +1,49 @@
 
 const fs = require('fs');
 
-class Order{
+class Order {
 
   constructor() {
     this.obj = {
-        data:[]
+      data: []
     }
     this.datafile = './../data/';
     let data = require('./../data/information.json');
     this.ultimo = data.ultimo;
   }
-
+  initOrder(data) {
+    return this.datafile + data.dni + this.ultimo + '.json';
+  }
   registerOrder(data) {
-    console.log(data);
     this.ultimo += 1;
-    this.grabarArchivo();
-    console.log('ss',this.initOrder(data));
+    this.grabarArchivoConfig();
+    this.grabarOrder(data);
   }
 
-   initOrder(data) {
-      return this.datafile + data.dni+this.ultimo+'.json';
-   }
-
-  detailOrder(code) {
-
+  grabarOrder(order) {
+    let jsonData = {
+      name: order.name,
+      lastName: order.lastName,
+      dni: order.dni,
+      pedido: order.pedido,
+      cantidad: order.cantidad,
+      address: order.address,
+      city: order.city,
+      zip: order.zip,
+      status: 'DESPACHO'
+    };
+    jsonData = JSON.stringify(jsonData);
+    const codigo = this.initOrder(order);
+    const nameFile = './data/' + codigo.toString();
+    fs.writeFileSync(nameFile, jsonData);
   }
 
-  update() {
-    
-  }
 
-  grabarArchivo() {
+  grabarArchivoConfig() {
     let jsonData = {
       ultimo: this.ultimo
     };
-     jsonData = JSON.stringify(jsonData);
+    jsonData = JSON.stringify(jsonData);
     fs.writeFileSync('./data/information.json', jsonData);
   }
 

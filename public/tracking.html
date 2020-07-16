@@ -137,7 +137,7 @@
       <h3>Ingrese el numero de pedido</h3>
     </div>
     <div class="seccion">
-      <input style="flex-grow: 2" name="order" type="number" id="orderInput">
+      <input  autocomplete="false" style="flex-grow: 2" name="order" type="number" id="orderInput">
       <button style="flex-grow: 1;    margin-left: 15px;" type="submit" class="btn btn-primary"
         onclick="tracking()">Buscar Pedido</button>
 
@@ -146,27 +146,26 @@
   </div>
   </div>
   <div id="tracking-list">
-
+<!-- 
+  completed
+  current
+ -->
     <div class='line-container'>
       <div class='progress-line'>
-        <div class='progress' style="width: 50%;">
+        <div class='progress' style="width: 0%;">
         </div>
         <div class='status'>
-          <div class='dot completed'>
-
+          <div class='dot '>
           </div>
         </div>
         <div class='status'>
-          <div class='dot current'>
-
+          <div class='dot '>
           </div>
         </div>
         <div class='status'>
           <div class='dot'>
-
           </div>
         </div>
-
       </div>
 
     </div>
@@ -188,9 +187,8 @@
       CHAT ONLINE
     </div>
     <div id="chat_body"></div>
-
     <form action="javascript:void(0);">
-      <input type="text" name="message" id="message">
+      <input autocomplete="false" type="text" name="message" id="message" autofocus>
       <button id="buttonChat">Enviar</button>
     </form>
   </div>
@@ -206,16 +204,19 @@
         alert("valor correcto");
       }
     }
-
-
-  </script>
-        
+  </script>   
   <script>
       
       $('#buttonChat').click((data)=>{
         console.log("send Chat");
-      })
+      });
+
+      var element=document.getElementsByClassName('dot');
+         console.log(element.length);
+
   </script>
+   <script src="socket.io/socket.io.js"></script>
+  <script src="js/tracking.js"></script>
 </body>
 
 </html>
