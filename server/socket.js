@@ -19,33 +19,23 @@ io.on('connection', (client) => {
     callback();
   });
   client.on('reception', (data, callback) => {
+    console.log(data);
     client.broadcast.emit('statusActual', {
       event: "reception"
     });
     callback();
   });
 
-
   client.on('entrarChat', (data, callback) => {
-    if (!data.nombre || !data.order) {
-      return callback({
-        error: true,
-        mensaje: 'El nombre/order no existe'
-      });
-    }
+    console.log(data,'entre');
+     client.join(data.order);
+     usuarios.agregarPersonas(client.id, data.nombre, data.order);
+     client.broadcast.to(data.order).emit('listaPersonas', usuarios.getPersonasChat(data.sala));
+    client.broadcast.to(data.order).emit('crearMensaje', crearMensaje('demo'), data.nombre);
+    callback();
+  });
+   client.on('crearMensaje', (data, callback) => {
+    console.log('adsa',data);
+  });
+});
 
-    client.join(data.order);
-
-    usuarios.agregarPersonas(client.id, data.nombre, data.order);
-
-    client.broadcast.to().emit()
-    client.broadcast.to().emit()
-    callback(usuarios.getPersonasChat(data.order))
-
-  })
-
-
-
-
-
-})
