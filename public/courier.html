@@ -75,7 +75,8 @@
     </div>
     <div class="card mb-4 shadow-sm">
       <div class="card-header">
-        <h4 class="font-weight-normal">Detalle de orden</h4>
+        <h4 class="font-weight-normal">Detalle de orden:</h4>
+        <p id="codeOrder"> </p>
       </div>
       <div class="card-body courier-body">
         <div class="detail-order">
@@ -119,7 +120,7 @@
     crossorigin="anonymous"></script>
 
   <script>
-
+      var codeOrderValue;
     $(document).ready(function () {
       var searchParams = new URLSearchParams(window.location.search);
       let values = new Array();
@@ -158,7 +159,6 @@
       bodyData.address = values[5].value;
       bodyData.city = values[6].value;
       bodyData.zip = values[7].value;
-      console.log(bodyData);
 
       let url = window.location.host;
       const urlPost = 'http://' + url.toString() + '/order/post/demo';
@@ -174,7 +174,9 @@
         (response) => { return response.json() }
       ).then(
         (e) => {
-          $('h4').text('Detalle de orden: Nro:' + bodyData.dni + e.data);
+
+          $('#codeOrder').text( bodyData.dni + e.data);
+          codeOrderValue=bodyData.dni+e.data;
         }
       );
     });
@@ -199,7 +201,7 @@
 
     }
 
-
+    
   </script>
   <script>
 

@@ -2,6 +2,20 @@ var socket = io();
 //
 var listDo = document.getElementsByClassName('dot');
 var progress = document.getElementsByClassName('progress');
+
+
+$('#searchValue').on('click', function () {
+ 
+  var valueCode = $('#orderInput').val();
+  var usuario = {
+    nombre: 'cliente',
+    order:valueCode
+  }
+   socket.emit('entrarChat',usuario,function (resp) {
+     console.log('client',resp);
+   })
+});
+
 socket.on('connect', function () {
   console.log('conectado al server');
 

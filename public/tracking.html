@@ -139,7 +139,7 @@
     <div class="seccion">
       <input  autocomplete="false" style="flex-grow: 2" name="order" type="number" id="orderInput">
       <button style="flex-grow: 1;    margin-left: 15px;" type="submit" class="btn btn-primary"
-        onclick="tracking()">Buscar Pedido</button>
+        onclick="tracking()" id="searchValue">Buscar Pedido</button>
 
     </div>
 
@@ -200,9 +200,7 @@
       if (!$('#orderInput').val()) {
         alert("ingrese un valor valido");
       }
-      else {
-        alert("valor correcto");
-      }
+      
     }
   </script>   
   <script>

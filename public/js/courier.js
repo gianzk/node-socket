@@ -1,37 +1,57 @@
 var socket = io();
+/* var usuario = {
+  nombre: 'courier',
+  order:
+} */
 
-socket.on('connect', function () {
-  console.log('conectar al server');
-});
+console.log('aca');
 
-
-socket.on('disconnect', function () {
-  console.log('Desconectar al server');
-});
-
-
-
-$('#first').on('click', function () {
-  socket.emit('dispatch', null, function () {
-    console.log('callback dispatch');
+$(document).ready(function () {
+  socket.on('connect', function () {
+    console.log('conectar al server');
+ 
+    
   });
-});
 
 
-$('#second').on('click', function () {
-  socket.emit('transport', null, function () {
-    console.log('callback transport');
+  socket.on('disconnect', function () {
+    console.log('Desconectar al server');
   });
-});
 
 
-$('#three').on('click', function () {
-  socket.emit('reception', null, function () {
-    console.log('callback reception');
+
+
+  $('#first').on('click', function () {
+    socket.emit('dispatch', null, function () {
+      console.log('callback dispatch');
+    });
+
+
   });
-}); 
 
 
+  $('#second').on('click', function () {
+    socket.emit('transport', null, function () {
+      console.log('callback transport');
+    });
+  });
+
+
+  $('#three').on('click', function () {
+    socket.emit('reception', null, function () {
+      console.log('callback reception');
+    });
+  });
+     let codeValue = codeOrderValue
+    var usuario = {
+      nombre: 'courier',
+      order: codeValue
+    }
+   socket.emit('entrarChat', usuario, function (resp) {
+      console.log('delete');
+    });
+
+});
 
 
 
