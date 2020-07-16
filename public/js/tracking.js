@@ -29,18 +29,22 @@ socket.on('connect', function () {
       case 'transport':
         listDo[1].className += "current";
          
-        $('.progress').css('width','50%');
+        $('.progress').css('width', '50%');
         break;
-      case 'reception': 
+      case 'reception':
         listDo[0].className += " completed";
         listDo[1].className += " completed";
         listDo[2].className += " completed";
-        $('.progress').css('width','100%');
+        $('.progress').css('width', '100%');
         break;
       default:
         return;
         break;
     }
+  });
+
+  socket.on('listaPersonas', function (order) {
+      console.log()
   })
 
 
