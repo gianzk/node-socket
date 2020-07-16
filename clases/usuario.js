@@ -11,7 +11,7 @@ class User {
     return this.personas;
   }
 
-  getPersonasChat() {
+  getPersonasChat(order) {
     let personasOrder = this.personas.filter(persona => persona.order === order);
     return personasOrder;
   }
